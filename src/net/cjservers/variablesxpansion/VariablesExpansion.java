@@ -20,11 +20,15 @@ public class VariablesExpansion extends PlaceholderExpansion {
   
   @Override
   public @NotNull String getVersion() {
-    return "1.0.0";
+    return "1.1.0";
   }
   
   @Override
   public String onRequest(OfflinePlayer player, String params) {
+    if (PlaceholderAPI.containsBracketPlaceholders(params))
+      params = PlaceholderAPI.setBracketPlaceholders(player, params);
+    if (!PlaceholderAPI.setPlaceholders(player, "%" + params + "%").equals("%" + params + "%"))
+      params = PlaceholderAPI.setPlaceholders(player, "%" + params + "%");
     return PlaceholderAPI.setPlaceholders(player, getString(params, ""));
   }
   
